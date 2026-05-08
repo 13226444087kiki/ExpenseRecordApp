@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ExpenseRecordApp</string>
+
+        <string name="record_list_title">记账记录</string>
+        <string name="no_records">暂无记账记录\n点击添加按钮开始记账</string>
+        <string name="back">返回</string>
+    <string name="notification_title">记账提醒</string>
+    <string name="notification_content">今天还没有记录支出，点击立即记账</string>
+    <string name="notification_big_content">记账提醒：今天还没有记录任何支出。养成良好的记账习惯，可以帮助你更好地管理财务。点击立即开始记账。</string>
+
+
+</resources>
+
