@@ -104,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
         // 初始化广播接收器
         registerExpenseUpdateReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 每次返回首页时重新加载数据，确保与记账记录页面同步
+        viewModel.loadTransactions();
 
         // 初始化Service状态
         updateServiceStatus(false);
