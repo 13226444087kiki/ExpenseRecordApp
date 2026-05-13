@@ -437,12 +437,14 @@
                 android:layout_height="wrap_content"
                 android:text="查看详细记录"
                 android:textSize="16sp"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="12dp"
-                android:backgroundTint="@color/gray_300"
-                android:textColor="@color/gray_700"
+                android:textStyle="bold"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="14dp"
+                android:background="@drawable/btn_view_records_background"
+                android:textColor="@color/white"
                 android:drawableStart="@drawable/ic_list"
-                android:drawablePadding="8dp" />
+                android:drawablePadding="10dp"
+                android:elevation="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"

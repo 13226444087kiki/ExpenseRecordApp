@@ -1,5 +1,6 @@
 package com.example.expenserecordapp;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -367,7 +368,7 @@ public class ExpenseViewModel extends ViewModel {
 
             if (cursor != null) {
                 if (cursor.moveToPosition(position)) {
-                    int id = cursor.getInt(cursor.getColumnIndex(ExpenseContract.ExpenseEntry._ID));
+                    @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(ExpenseContract.ExpenseEntry._ID));
                     cursor.close();
 
                     Uri uri = ExpenseContract.ExpenseEntry.CONTENT_URI.buildUpon()
@@ -401,7 +402,7 @@ public class ExpenseViewModel extends ViewModel {
 
             if (cursor != null) {
                 if (cursor.moveToPosition(position)) {
-                    int id = cursor.getInt(cursor.getColumnIndex(ExpenseContract.ExpenseEntry._ID));
+                    @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(ExpenseContract.ExpenseEntry._ID));
                     cursor.close();
 
                     ContentValues values = new ContentValues();
@@ -439,12 +440,19 @@ public class ExpenseViewModel extends ViewModel {
                     null, null, null, ExpenseContract.ExpenseEntry.COLUMN_DATE + " DESC");
 
             if (cursor != null) {
+                // 获取列索引
+                int amountIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_AMOUNT);
+                int typeIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_TYPE);
+                int categoryIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_CATEGORY);
+                int noteIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_NOTE);
+                int dateIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_DATE);
+                
                 while (cursor.moveToNext()) {
-                    double amount = cursor.getDouble(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_AMOUNT));
-                    String type = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_TYPE));
-                    String category = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_CATEGORY));
-                    String note = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_NOTE));
-                    String date = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_DATE));
+                    double amount = (amountIndex >= 0) ? cursor.getDouble(amountIndex) : 0.0;
+                    String type = (typeIndex >= 0) ? cursor.getString(typeIndex) : "支出";
+                    String category = (categoryIndex >= 0) ? cursor.getString(categoryIndex) : "";
+                    String note = (noteIndex >= 0) ? cursor.getString(noteIndex) : "";
+                    String date = (dateIndex >= 0) ? cursor.getString(dateIndex) : "";
 
                     Transaction transaction = new Transaction(amount, type, category, note, date);
                     transactions.add(transaction);

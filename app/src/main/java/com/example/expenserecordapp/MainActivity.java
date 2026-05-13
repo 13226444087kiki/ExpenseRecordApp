@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.expenserecordapp.ui.RecordListActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -633,15 +634,23 @@ public class MainActivity extends AppCompatActivity {
             
             if (cursor != null) {
                 int count = 0;
+                
+                // 获取列索引
+                int idIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry._ID);
+                int amountIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_AMOUNT);
+                int categoryIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_CATEGORY);
+                int noteIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_NOTE);
+                int dateIndex = cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_DATE);
+                
                 while (cursor.moveToNext()) {
-                    int id = cursor.getInt(cursor.getColumnIndex(ExpenseContract.ExpenseEntry._ID));
-                    double amount = cursor.getDouble(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_AMOUNT));
-                    String category = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_CATEGORY));
-                    String note = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_NOTE));
-                    String date = cursor.getString(cursor.getColumnIndex(ExpenseContract.ExpenseEntry.COLUMN_DATE));
+                    int id = (idIndex >= 0) ? cursor.getInt(idIndex) : 0;
+                    double amount = (amountIndex >= 0) ? cursor.getDouble(amountIndex) : 0.0;
+                    String category = (categoryIndex >= 0) ? cursor.getString(categoryIndex) : "";
+                    String note = (noteIndex >= 0) ? cursor.getString(noteIndex) : "";
+                    String billDate = (dateIndex >= 0) ? cursor.getString(dateIndex) : "";
                     
                     status.append(String.format("ID: %d, 金额: %.2f, 类别: %s, 备注: %s, 日期: %s\n",
-                            id, amount, category, note, date));
+                            id, amount, category, note, billDate));
                     count++;
                 }
                 cursor.close();
